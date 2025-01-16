@@ -1,1 +1,22 @@
-<p>events works!</p>
+<section class="md:w-[1250px] flex flex-col">
+  <hgroup class="w-full flex flex-col mb-10">
+    <h1 class="self-center header-text pb-4">#Events</h1>
+    <p class="text-2xl self-center">This is the Events page.</p>
+    <app-button
+      labelText="+ Create Event"
+      class="!w-fit self-end items-start mt-10"
+    />
+  </hgroup>
+  @if (perform.isLoading) {
+  <p class="self-center mt-10">Loading events...</p>
+  } @if (perform.hasError) {
+  <p class="self-center mt-10 text-textDanger">
+    Error, can not fetch any event.
+  </p>
+  }
+  <div className="w-full flex flex-col gap-y-10">
+    @for (event of perform.data; track $index) {
+    <app-event-card [event]="event" />
+    }
+  </div>
+</section>
