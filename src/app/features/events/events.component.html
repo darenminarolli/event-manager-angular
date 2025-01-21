@@ -5,18 +5,24 @@
     <app-button
       labelText="+ Create Event"
       class="!w-fit self-end items-start mt-10"
-    />
+    ></app-button>
   </hgroup>
-  @if (perform.isLoading) {
-  <p class="self-center mt-10">Loading events...</p>
-  } @if (perform.hasError) {
-  <p class="self-center mt-10 text-textDanger">
-    Error, can not fetch any event.
+
+  <p *ngIf="eventsService.isLoading" class="self-center mt-10">
+    Loading events...
   </p>
-  }
-  <div className="w-full flex flex-col gap-y-10">
-    @for (event of perform.data; track $index) {
-    <app-event-card [event]="event" />
-    }
+
+  <p *ngIf="eventsService.hasError" class="self-center mt-10 text-textDanger">
+    Error, cannot fetch any events.
+  </p>
+
+  <div
+    *ngIf="!eventsService.isLoading && !eventsService.hasError"
+    class="w-full flex flex-col gap-y-10"
+  >
+    <app-event-card
+      *ngFor="let event of eventsService.data"
+      [event]="event"
+    ></app-event-card>
   </div>
 </section>
