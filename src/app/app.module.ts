@@ -20,7 +20,7 @@ import { EventsPage } from './features/events/events.component';
     ButtonComponent,
     EventCardComponent,
   ],
-  exports: [LayoutComponent, ButtonComponent, EventCardComponent],
+  exports: [],
   providers: [provideHttpClient(), EventsService],
   bootstrap: [AppComponent],
 })
