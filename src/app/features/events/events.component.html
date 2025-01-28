@@ -8,7 +8,7 @@
     ></app-button>
   </hgroup>
 
-  <p *ngIf="eventsService.isLoading" class="self-center mt-10">
+  <p *ngIf="isLoading" class="self-center mt-10">
     Loading events...
   </p>
 
@@ -20,10 +20,10 @@
     *ngIf="!eventsService.isLoading && !eventsService.hasError"
     class="w-full flex flex-col gap-y-10"
   >
-    <app-event-card
-      *ngFor="let event of eventsService.data"
-      [event]="event"
-    ></app-event-card>
+  <app-event-card
+  *ngFor="let event of events$ | async"
+  [event]="event"
+></app-event-card>
   </div>
 </section>
 

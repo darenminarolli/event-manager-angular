@@ -17,24 +17,4 @@ export class EventsService {
     return this.http.get<Event[]>(this.url);
   }
 
-  loadEvents(): void {
-    this.isLoading = true;
-    this.hasError = false;
-
-    this.getAllEvents()
-      .pipe(
-        take(1),
-        catchError(() => {
-          this.data = undefined;
-          this.isLoading = false;
-          this.hasError = true;
-          return of([]);
-        })
-      )
-      .subscribe((events: Event[]) => {
-        this.data = events;
-        this.isLoading = false;
-        this.hasError = false;
-      });
-  }
 }
