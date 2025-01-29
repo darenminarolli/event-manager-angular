@@ -12,16 +12,16 @@
     Loading events...
   </p>
 
-  <p *ngIf="eventsService.hasError" class="self-center mt-10 text-textDanger">
+  <p *ngIf="hasError" class="self-center mt-10 text-textDanger">
     Error, cannot fetch any events.
   </p>
 
   <div
-    *ngIf="!eventsService.isLoading && !eventsService.hasError"
+    *ngIf="!isLoading && !hasError"
     class="w-full flex flex-col gap-y-10"
   >
   <app-event-card
-  *ngFor="let event of events$ | async"
+  *ngFor="let event of events"
   [event]="event"
 ></app-event-card>
   </div>
