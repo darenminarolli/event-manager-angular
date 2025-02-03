@@ -1,9 +1,9 @@
-<form [formGroup]="loginForm" class="w-full md:w-[600px] m-auto flex flex-col  gap-y-4 my-4" (ngSubmit)="onSubmit()">
-    <h1 class="header-text">#Login</h1>
-  
-    <div class="flex flex-col gap-8">
-      <div class="flex flex-col gap-4">
-        <app-input
+<form [formGroup]="loginForm" class="w-full md:w-[600px] m-auto flex flex-col gap-y-4 my-4" (ngSubmit)="onSubmit()">
+  <h1 class="header-text">#Login</h1>
+
+  <div class="flex flex-col gap-8">
+    <div class="flex flex-col gap-4">
+      <app-input
         label="Email"
         type="email"
         id="email"
@@ -11,14 +11,14 @@
         placeholder="Type your email"
         [parentForm]="loginForm"
       />
-      <p class="text-textDanger">
-        {{ loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched ? 'Email is required' : '' }}
-        {{ loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched ?'Invalid email format' : '' }}
+      <p *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-textDanger">
+        <span *ngIf="loginForm.get('email')?.hasError('required')">Email is required</span>
+        <span *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format</span>
       </p>
-      </div>
-  
-      <div class="flex flex-col gap-4">
-        <app-input
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <app-input
         label="Password"
         type="password"
         id="password"
@@ -26,12 +26,13 @@
         placeholder="Type your password"
         [parentForm]="loginForm"
       />
-      <p class="text-textDanger">
-        {{ loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched ? 'Password is required' : '' }}
-        {{ loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched ?'Invalid Password format' : '' }}
+      <p *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-textDanger">
+        <span *ngIf="loginForm.get('password')?.hasError('required')">Password is required</span>
+        <span *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 6 characters</span>
       </p>
-      </div>
-      <app-button type="submit" labelText="Login"/>
     </div>
-    <p>Dont have an account? <a routerLink="/auth/register">Create one...</a></p>
-  </form>
+
+    <app-button [disabled]="isLoading || loginForm.invalid" type="submit" labelText="Login"/>
+  </div>
+  <p>Don't have an account? <a class="text-purple-500" routerLink="/auth/register">Create one...</a></p>
+</form>

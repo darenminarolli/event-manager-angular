@@ -12,8 +12,5 @@ export class ButtonComponent {
  @Input({required:true}) labelText!: string;
  @Input() class!: string;
  @Input() disabled!: boolean;
-//  @Input() severity!: string;
-//  @Input() icon!: string;
-//  @Input() iconPosition!: string;
  @Input() type!: string;
 }

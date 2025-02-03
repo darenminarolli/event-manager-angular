@@ -1,15 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { InputTextModule } from 'primeng/inputtext';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { ButtonComponent } from "../../../shared/components/ui/button/button.component";
-import { InputComponent } from '../../../shared/components/ui/input/input.component';
 import { take } from 'rxjs';
+
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, ButtonComponent,InputComponent, InputTextModule],
+  standalone: false,
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -26,33 +23,6 @@ export class LoginPage {
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   })
 
-
-  getEmailError(): string {
-    const control = this.loginForm.get('email');
-    if (control?.touched) {
-      if (control.hasError('required')) {
-        return 'Email is required';
-      }
-      if (control.hasError('email')) {
-        return 'Invalid email format';
-      }
-    }
-    return '';
-  }
-
-  getPasswordError(): string {
-    const control = this.loginForm.get('password');
-    if (control?.touched) {
-      if (control.hasError('required')) {
-        return 'Password is required';
-      }
-      if (control.hasError('minlength')) {
-        return 'Password must be at least 6 characters';
-      }
-    }
-    return '';
-  }
- 
   onSubmit() {
     if (this.loginForm.valid) {
       this.isLoading = true;
@@ -73,5 +43,6 @@ export class LoginPage {
         }
       });
     }
+    this.loginForm.reset()
   }
 }

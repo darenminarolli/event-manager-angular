@@ -9,16 +9,23 @@ import { provideHttpClient } from '@angular/common/http';
 import { EventCardComponent } from './shared/components/event-card/event-card.component';
 import { EventsService } from './core/services/events.service';
 import { EventsPage } from './features/events/events.component';
+import { LoginPage } from './features/auth/login/login.component';
+import { InputComponent } from './shared/components/ui/input/input.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @NgModule({
-  declarations: [AppComponent, EventsPage],
+  declarations: [AppComponent, EventsPage, LoginPage],
   imports: [
     BrowserModule,
     CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
     AppRoutingModule,
     LayoutComponent,
-    ButtonComponent,
     EventCardComponent,
+    ButtonComponent,
+    InputComponent,
   ],
   exports: [],
   providers: [provideHttpClient(), EventsService],
