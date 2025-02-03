@@ -1,1 +1,13 @@
-<p>user-profile works!</p>
+<div class="w-full flex flex-col text-center gap-y-6 mb-20">
+    <h1 class="header-text">#Profile Page</h1>
+    <p> 
+        Hi {{dataUser?.firstName}}, Here you can see your details, events you've created or
+        reserved, and any other information you'd like to share.
+      </p>
+      <app-button class="md:w-fit md:self-end" labelText="Logout"/>
+</div>
+<div class="w-full flex flex-col  gap-10">
+  <p>Created Events</p>
+  <hr>
+  <p>Reserved Events</p>
+</div>
