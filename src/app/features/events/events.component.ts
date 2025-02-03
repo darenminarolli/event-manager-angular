@@ -1,21 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import { ButtonComponent } from '../../shared/components/ui/button/button.component';
-import { EventCardComponent } from '../../shared/components/event-card/event-card.component';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventsService } from '../../core/services/events.service';
-import { CommonModule } from '@angular/common';
+import { catchError, Subject, takeUntil } from 'rxjs';
+import { Event } from '../../core/models/event.interface';
 
 @Component({
   selector: 'app-events',
-  standalone: true,
-  imports: [CommonModule, ButtonComponent, EventCardComponent],
-  providers: [EventsService],
+  standalone: false,
   templateUrl: './events.component.html',
-  styleUrl: './events.component.css',
+  styleUrls: ['./events.component.css'],
 })
-export class EventsPage implements OnInit {
+export class EventsPage implements OnInit, OnDestroy {
+  events: Event[] = [];
+  isLoading = false;
+  hasError = false;
+  private unsubscribe$ = new Subject<void>();
+
   constructor(public eventsService: EventsService) {}
 
   ngOnInit(): void {
-    this.eventsService.loadEvents();
+    this.fetchEvents();
+  }
+
+  fetchEvents() {
+    this.isLoading = true;
+    this.eventsService
+      .getAllEvents()
+      .pipe(
+        catchError(() => {
+          this.hasError = true;
+          return [];
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((events) => {
+        this.events = events;
+        this.isLoading = false;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

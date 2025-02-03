@@ -8,21 +8,22 @@
     ></app-button>
   </hgroup>
 
-  <p *ngIf="eventsService.isLoading" class="self-center mt-10">
+  <p *ngIf="isLoading" class="self-center mt-10">
     Loading events...
   </p>
 
-  <p *ngIf="eventsService.hasError" class="self-center mt-10 text-textDanger">
+  <p *ngIf="hasError" class="self-center mt-10 text-textDanger">
     Error, cannot fetch any events.
   </p>
 
   <div
-    *ngIf="!eventsService.isLoading && !eventsService.hasError"
+    *ngIf="!isLoading && !hasError"
     class="w-full flex flex-col gap-y-10"
   >
-    <app-event-card
-      *ngFor="let event of eventsService.data"
-      [event]="event"
-    ></app-event-card>
+  <app-event-card
+  *ngFor="let event of events"
+  [event]="event"
+></app-event-card>
   </div>
 </section>
+
