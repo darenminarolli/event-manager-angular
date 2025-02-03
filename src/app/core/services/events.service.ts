@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Event } from '../models/event.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class EventsService {
+  private url = 'https://event-manager-api-ten.vercel.app/api/events';
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
+
+  getAllEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(this.url);
+  }
+
 }

@@ -1,3 +1,0 @@
-.button-default {
-  @apply w-full flex text-text text-center cursor-pointer items-center justify-center rounded-base border-2 border-border  bg-main px-4 py-2 text-sm font-base shadow-light dark:shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none dark:hover:shadow-none;
-}
