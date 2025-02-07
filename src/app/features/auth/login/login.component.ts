@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { take } from 'rxjs';
@@ -38,8 +38,7 @@ export class LoginPage {
         },
         error: (err) => {
           this.isLoading = false;
-          this.loginError = err.message;
-          console.error(err);
+          this.loginError = 'Error login  user, please try again later!';
         }
       });
     }

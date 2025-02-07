@@ -1,1 +1,76 @@
-<p>register works!</p>
+<form
+  [formGroup]="registerForm"
+  class="w-full md:w-[600px] m-auto flex flex-col gap-y-4 my-4"
+  (ngSubmit)="onSubmit()"
+>
+  <h1 class="header-text">#Register</h1>
+
+  <div class="flex flex-col gap-8">
+    <div class="flex flex-col gap-4">
+      <app-input
+        label="First Name"
+        type="text"
+        id="firstName"
+        controlName="firstName"
+        placeholder="Type your first name"
+        [parentForm]="registerForm"
+      />
+      <p class="text-textDanger">{{ getErrorMessage("firstName") }}</p>
+    </div>
+    <div class="flex flex-col gap-4">
+      <app-input
+        label="Last Name"
+        type="text"
+        id="lastName"
+        controlName="lastName"
+        placeholder="Type your last name"
+        [parentForm]="registerForm"
+      />
+      <p class="text-textDanger">{{ getErrorMessage("lastName") }}</p>
+    </div>
+    <div class="flex flex-col gap-4">
+      <app-input
+        label="Email"
+        type="email"
+        id="email"
+        controlName="email"
+        placeholder="Type your email"
+        [parentForm]="registerForm"
+      />
+      <p class="text-textDanger">{{ getErrorMessage("email") }}</p>
+    </div>
+    <div class="flex flex-col gap-4">
+      <app-input
+        label="Password"
+        type="password"
+        id="password"
+        controlName="password"
+        placeholder="Type your password"
+        [parentForm]="registerForm"
+      />
+      <p class="text-textDanger">{{ getErrorMessage("password") }}</p>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <app-input
+        label="Confirm Password"
+        type="password"
+        id="confirmPassword"
+        controlName="confirmPassword"
+        placeholder="Confirm your password"
+        [parentForm]="registerForm"
+      />
+      <p class="text-textDanger">{{ getErrorMessage("confirmPassword") }}</p>
+    </div>
+    <app-button
+      type="submit"
+      labelText="Register"
+      [disabled]="isLoading || registerForm.invalid"
+    />
+  </div>
+  <p class="text-textDanger">{{registerError}}</p>
+  <p>
+    Already have an account?
+    <a class="text-purple-500" routerLink="/auth/login">Log in...</a>
+  </p>
+</form>
