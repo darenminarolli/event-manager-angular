@@ -17,6 +17,7 @@
       />
       <p class="text-textDanger">{{ getErrorMessage("firstName") }}</p>
     </div>
+
     <div class="flex flex-col gap-4">
       <app-input
         label="Last Name"
@@ -28,6 +29,7 @@
       />
       <p class="text-textDanger">{{ getErrorMessage("lastName") }}</p>
     </div>
+
     <div class="flex flex-col gap-4">
       <app-input
         label="Email"
@@ -39,6 +41,7 @@
       />
       <p class="text-textDanger">{{ getErrorMessage("email") }}</p>
     </div>
+
     <div class="flex flex-col gap-4">
       <app-input
         label="Password"
@@ -62,13 +65,16 @@
       />
       <p class="text-textDanger">{{ getErrorMessage("confirmPassword") }}</p>
     </div>
+
     <app-button
       type="submit"
       labelText="Register"
       [disabled]="isLoading || registerForm.invalid"
-    />
+    ></app-button>
   </div>
-  <p class="text-textDanger">{{registerError}}</p>
+
+  <p class="text-textDanger">{{ registerError }}</p>
+
   <p>
     Already have an account?
     <a class="text-purple-500" routerLink="/auth/login">Log in...</a>

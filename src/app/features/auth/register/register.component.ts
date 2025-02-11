@@ -2,12 +2,11 @@ import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
+  FormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-
 import { AuthService } from '../../../core/services/auth.service';
 import { take } from 'rxjs';
 import { Router } from '@angular/router';
@@ -17,7 +16,7 @@ export const confirmPasswordValidator: ValidatorFn = (
 ): ValidationErrors | null => {
   const password = control.get('password')?.value;
   const confirmPassword = control.get('confirmPassword')?.value;
-  return password === confirmPassword ? null : { PasswordNoMatch: true };
+  return password === confirmPassword ? null : { passwordNoMatch: true };
 };
 
 @Component({
@@ -34,26 +33,18 @@ export class RegisterPage {
   isLoading = false;
   registerError = '';
 
-  registerForm = this.formBuilder.group(
+  registerForm: FormGroup = this.formBuilder.group(
     {
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-      confirmPassword: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     },
-    {
-      validators: [confirmPasswordValidator],
-    }
+    { validators: confirmPasswordValidator }
   );
 
-  getErrorMessage(controlName: string): any {
+  getErrorMessage(controlName: string) {
     const control = this.registerForm.get(controlName);
 
     if (control?.hasError('required') && control.touched) {
@@ -66,36 +57,39 @@ export class RegisterPage {
       return `${controlName} must be at least ${control.errors?.['minlength'].requiredLength} characters`;
     }
     if (
-      this.registerForm.hasError('PasswordNoMatch') &&
+      this.registerForm.hasError('passwordNoMatch') &&
       controlName === 'confirmPassword' &&
-      (control?.touched || this.registerForm.get('password')?.touched)
+      control?.touched
     ) {
       return 'Passwords do not match';
     }
-    return;
+    return ;
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       return;
     }
-    if(this.registerForm.valid){
-      this.isLoading = true;
-    }
-    const data = { ...this.registerForm.value };
-    delete data['confirmPassword'];
+
+    this.isLoading = true;
+
+    const { confirmPassword, ...data } = this.registerForm.value;
+
     this.authService
       .registerUser(data)
       .pipe(take(1))
       .subscribe({
-        next: () => {this.router.navigate(['/auth/login'])
+        next: () => {
           this.isLoading = false;
+          this.router.navigate(['/auth/login']);
         },
-        error: (error) => {
+        error: () => {
           this.isLoading = false;
-          this.registerError = 'Error registering user, please try again later!';
+          this.registerError =
+            'Error registering user, please try again later!';
         },
       });
+      this.registerForm.reset()
   }
 }
