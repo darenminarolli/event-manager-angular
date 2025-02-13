@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit,OnDestroy {
       next: (isAuth) => this.isLoggedIn = isAuth,
       error: () => this.isLoggedIn = false,
     });
-    console.log(this.isLoggedIn);
   }
   ngOnDestroy(): void {
     this.destroy$.next();

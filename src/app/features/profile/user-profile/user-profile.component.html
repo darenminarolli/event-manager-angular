@@ -4,7 +4,7 @@
         Hi {{dataUser?.firstName}}, Here you can see your details, events you've created or
         reserved, and any other information you'd like to share.
       </p>
-      <app-button class="md:w-fit md:self-end" labelText="Logout"/>
+      <app-button (click)="logout()" class="md:w-fit md:self-end" labelText="Logout"/>
 </div>
 <div class="w-full flex flex-col  gap-10">
   <p>Created Events</p>

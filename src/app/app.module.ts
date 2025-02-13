@@ -8,6 +8,7 @@ import { ButtonComponent } from './shared/components/ui/button/button.component'
 import { provideHttpClient } from '@angular/common/http';
 import { EventCardComponent } from './shared/components/event-card/event-card.component';
 import { EventsService } from './core/services/events.service';
+import { UserProfilePage } from './features/profile/user-profile/user-profile.component';
 import { EventsPage } from './features/events/events.component';
 import { LoginPage } from './features/auth/login/login.component';
 import { InputComponent } from './shared/components/ui/input/input.component';
@@ -15,7 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 @NgModule({
-  declarations: [AppComponent, EventsPage, LoginPage],
+  declarations: [AppComponent, UserProfilePage, EventsPage, LoginPage],
   imports: [
     BrowserModule,
     CommonModule,
