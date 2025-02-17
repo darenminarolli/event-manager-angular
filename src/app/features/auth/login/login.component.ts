@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { take } from 'rxjs';
@@ -18,9 +18,9 @@ export class LoginPage {
   isLoading = false;
   loginError = '';
   
-  loginForm = this.formBuilder.group({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  loginForm: FormGroup = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   })
 
   onSubmit() {
@@ -38,8 +38,7 @@ export class LoginPage {
         },
         error: (err) => {
           this.isLoading = false;
-          this.loginError = err.message;
-          console.error(err);
+          this.loginError = 'Error login  user, please try again later!';
         }
       });
     }
