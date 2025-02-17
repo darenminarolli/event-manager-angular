@@ -13,14 +13,16 @@ import { EventsPage } from './features/events/events.component';
 import { LoginPage } from './features/auth/login/login.component';
 import { InputComponent } from './shared/components/ui/input/input.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
+import { RegisterPage } from './features/auth/register/register.component';
 
 @NgModule({
-  declarations: [AppComponent, UserProfilePage, EventsPage, LoginPage],
+  declarations: [AppComponent, UserProfilePage, EventsPage, LoginPage, RegisterPage],
   imports: [
     BrowserModule,
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     RouterLink,
     AppRoutingModule,
     LayoutComponent,
