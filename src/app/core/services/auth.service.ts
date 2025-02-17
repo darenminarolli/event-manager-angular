@@ -30,6 +30,7 @@ export class AuthService {
   }
 
   loginUser(data: { email: string; password: string }): Observable<any> {
+
     return this.http.post(`${this.apiUrl}/login`, data, {withCredentials:true}).pipe(
       catchError((error) => {
         return throwError(()=> new Error(error.error || error));
@@ -37,13 +38,15 @@ export class AuthService {
     );
   }
 
-  logoutUser(): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/logout`, {}).pipe(
-      catchError((error) => {
-        console.error('Error logging out:', error);
-        return throwError(()=> new Error(error.error || error));
-      })
-    );
+  logoutUser(): Observable<string> {
+    return this.http
+      .post(`${this.apiUrl}/logout`, {}, { responseType: 'text' })
+      .pipe(
+        catchError((error) => {
+          console.error('Error logging out:', error);
+          return throwError(() => new Error(error.error || error));
+        })
+      );
   }
 
   getUser(): User | null {
@@ -65,6 +68,9 @@ export class AuthService {
   }
 
   checkAuthStatus() {
+    if (!this.isAuthenticatedSubject.getValue()) {
+      return;
+    }
     return this.http
       .get<{ user: User }>(`${this.apiUrl}/me`, { withCredentials: true })
       .subscribe({
